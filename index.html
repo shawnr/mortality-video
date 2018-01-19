@@ -1,0 +1,139 @@
+<html>
+  <head>
+    <title>Mortality</title>
+  </head>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="js/axios.min.js"></script>
+  <body>
+    <div id="image"></div>
+    <p id="debug-data"></p>
+  <script>
+    let debug = true;
+    let faces = 0;
+    let prevFaces = 0;
+    let currentFrame = 0;
+    let body = document.querySelector('body');
+    let flashShim = document.querySelector('#flash-shim');
+    let dimShim = document.querySelector('#dim-shim');
+
+
+    let imageSet = 'banana';
+    let imageSetDivider = '_';
+    let imageSetStart = 1000;
+    let imageSetEnd = 1719;
+    let imageNumFrames = imageSetEnd - imageSetStart;
+    let imageSetDir = `img/${imageSet}`;
+    let imageSetStartImage = `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart}.jpg`;
+    let imageSetEndImage = `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetEnd}.jpg`;
+
+    let imageContainer = document.querySelector('#image');
+    let image = document.createElement('img');
+    image.setAttribute('src', imageSetStartImage);
+    imageContainer.appendChild(image);
+
+    if (debug) {
+      body.setAttribute('class', 'debug');
+      var debugData = document.querySelector('#debug-data');
+      debugData.innerHTML = `Faces detected: ${faces}`;
+    }
+
+    function checkFaces(){
+      axios.get('./faces.json')
+        .then(function (response) {
+          console.log('loaded face data');
+          let faceReport = response.data;
+          faces = faceReport.num;
+          debug = faceReport.debug;
+          if (debug)  {
+            let visitorGroups = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+            faces = visitorGroups[Math.floor(Math.random() * visitorGroups.length)];
+            debugData.innerHTML = `Faces detected: ${faces}`;
+          } else {
+            if (debugData != null) {
+              body.removeChild(debugData);
+              debugData = null;
+            }
+          }
+          console.log(`Detected ${faces} faces.`);
+          evaluateLife(faces);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+
+    let faceCheck = setInterval(checkFaces, 5000);
+    let imageDecay = setInterval(moveForward, 1000);
+
+    function defer(f, ms) {
+      return function() {
+        setTimeout(() => f.apply(this, arguments), ms)
+      };
+    }
+
+    function moveForward() {
+      if (currentFrame < imageNumFrames) {
+        console.log('Moving frame forward.');
+        currentFrame++;
+        console.log('Current frame: ' + currentFrame);
+        image.setAttribute('src', `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart+currentFrame}.jpg`);
+      }
+    }
+
+    function moveBackward() {
+      if (currentFrame > 0) {
+        console.log('Moving frame backward.');
+        currentFrame--;
+        console.log('Current frame: ' + currentFrame);
+        image.setAttribute('src', `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart+currentFrame}.jpg`);
+      }
+    }
+
+    function evaluateLife() {
+      if (faces > 0) {
+        console.log('life detected');
+        for (let i=0; i<faces; i++) {
+          setTimeout(moveBackward, (100*i));
+        }
+      }
+    }
+
+    function life() {
+      if (living.length > 0){
+        console.log('Expiring pixel...');
+        let randIndex = Math.floor(Math.random()*living.length);
+        let dyingPixel = living[randIndex];
+        dyingPixel.originalColor = dyingPixel.attr('fill');
+        flareOut(dyingPixel);
+        dyingPixel.attr('fill', '#000');
+        dead.push(dyingPixel);
+        living.splice(randIndex, 1);
+        console.log('Expiring rect #'+randIndex);
+      } else {
+        console.log('All pixels dead.');
+      }
+
+      if (dead.length > 0) {
+        console.log(`${faces} faces detected.`);
+        if (faces > 0) {
+          for (let i=0; i<faces; i++){
+            if (dead.length > 0) {
+              let randIndex = Math.floor(Math.random()*dead.length);
+              let revivingPixel = dead[randIndex];
+              revivingPixel.attr('fill', revivingPixel.originalColor);
+              flareOut(revivingPixel);
+              living.push(revivingPixel);
+              dead.splice(randIndex, 1);
+              console.log('Reviving rect #'+randIndex);
+            } else {
+              console.log('No more pixels to revive.');
+            }
+          }
+        }
+      } else {
+        console.log('No dead pixels.');
+      }
+    }
+  </script>
+  </body>
+</html>

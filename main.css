@@ -1,0 +1,36 @@
+html, body {
+    color: #fff;
+    width: 100vw;
+    height: 100vh;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    position: fixed;
+}
+#image {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+#image img {
+  width: 100vw;
+  height: auto;
+}
+
+#debug-data {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background: #666;
+    padding: 5px;
+}
+.debug #debug-data {
+    display: block;
+    color: #fff;
+}
+
