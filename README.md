@@ -1,11 +1,11 @@
-# Mortality Viewer
+# Mortality Video Viewer
 
 > This is a viewer for treated images that decay over time.
 
 ## Image treatment
 
-1. Create a SVG mosaic using Illustrator or similar.
-2. Export SVG file of pixels and store in project.
+1. Create a set of numbered JPGs that represent some form of decay. (Video should start with complete form and progress into a state of decay or decomposition.)
+2. Place images inside of `img` directory within project.
 
 ## Provision Raspberry Pi
 

@@ -15,7 +15,7 @@ echo "cv environment activated"
 echo "starting face detection script"
 # watch -n1 /home/pi/mortality/detect_faces.sh >> /home/pi/detect_faces.log &
 
-cd /home/pi/mortality
+cd /home/pi/mortality-video
 python detect_faces.py >> /home/pi/detect_faces.log &
 
 python -m http.server &
