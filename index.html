@@ -115,7 +115,7 @@
     function evaluateLife() {
       if (faces > 0) {
         console.log('life detected');
-        for (let i=0; i<faces; i++) {
+        for (let i=0; i<faces*5; i++) {
           setTimeout(moveBackward, (100*i));
         }
       }
