@@ -17,14 +17,15 @@
     let dimShim = document.querySelector('#dim-shim');
 
 
-    let imageSet = 'banana';
+    let imageSet = 'fear';
     let imageSetDivider = '_';
-    let imageSetStart = 1000;
-    let imageSetEnd = 1719;
+    let imageSetStart = 0;
+    let imageSetEnd = 31;
+    let imageSetExt = 'png';
     let imageNumFrames = imageSetEnd - imageSetStart;
     let imageSetDir = `img/${imageSet}`;
-    let imageSetStartImage = `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart}.jpg`;
-    let imageSetEndImage = `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetEnd}.jpg`;
+    let imageSetStartImage = `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart}.${imageSetExt}`;
+    let imageSetEndImage = `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetEnd}.${imageSetExt}`;
 
     let imageContainer = document.querySelector('#image');
     let image = document.createElement('img');
@@ -99,7 +100,7 @@
         console.log('Moving frame forward.');
         currentFrame++;
         console.log('Current frame: ' + currentFrame);
-        image.setAttribute('src', `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart+currentFrame}.jpg`);
+        image.setAttribute('src', `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart+currentFrame}.${imageSetExt}`);
       }
     }
 
@@ -108,7 +109,7 @@
         console.log('Moving frame backward.');
         currentFrame--;
         console.log('Current frame: ' + currentFrame);
-        image.setAttribute('src', `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart+currentFrame}.jpg`);
+        image.setAttribute('src', `${imageSetDir}/${imageSet}${imageSetDivider}${imageSetStart+currentFrame}.${imageSetExt}`);
       }
     }
 
