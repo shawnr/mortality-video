@@ -18,7 +18,11 @@ echo "starting face detection script"
 cd /home/pi/mortality-video
 python detect_faces.py >> /home/pi/detect_faces.log &
 
-python -m http.server &
+# Python 3 server
+# python -m http.server &
+
+# Python 2 server
+python -m SimpleHTTPServer 8000 &
 
 echo "web server starting"
 
