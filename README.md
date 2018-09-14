@@ -9,6 +9,7 @@
 
 ## Provision Raspberry Pi
 
-1. Install OpenCV.
+1. Install OpenCV. (https://www.pyimagesearch.com/2016/04/18/install-guide-raspberry-pi-3-raspbian-jessie-opencv-3/)
 2. Clone this repo to the PI.
-3. Set up automated tasks via cron or alternative.
+3. Install `picamera` with PIP.
+4. Set up automated tasks via cron or alternative.
